@@ -169,7 +169,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5 text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
-              <span className="text-[#E7E3D3]">Féilire & Cruinnithe</span>
+              <span className="text-[#E7E3D3]">Cruinnithe</span>
               <span className="hidden sm:inline text-[#4B8263]" aria-hidden="true">—</span>
               <span className="text-[#918B7A]">Weekly Meetings & Working Groups</span>
             </div>

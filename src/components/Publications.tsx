@@ -72,7 +72,7 @@ export const Publications: React.FC<PublicationsProps> = ({
               Recent Publications & Working Papers
             </h2>
             <p className="mt-2 text-sm sm:text-base text-[#C8C2AF] max-w-2xl">
-              All TEIC research is published under open access protocols. Easy maintenance is powered by simple Markdown files in the GitHub repository.
+              All TEIC research is published under open access protocols.
             </p>
           </div>
         </div>

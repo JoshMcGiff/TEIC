@@ -36,7 +36,7 @@ export const Meetings: React.FC<MeetingsProps> = ({ meetings }) => {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
             <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5 text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
-              <span className="text-[#E7E3D3]">Comhthionóil & Nótaí</span>
+              <span className="text-[#E7E3D3]">Cruinnithe & Nótaí</span>
               <span className="hidden sm:inline text-[#4B8263]" aria-hidden="true">—</span>
               <span className="text-[#918B7A]">Weekly Assembly & Agenda</span>
             </div>
