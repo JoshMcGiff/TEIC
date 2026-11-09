@@ -1,5 +1,7 @@
 import React from 'react';
 import { ArrowDown, BookOpen, Calendar, MapPin, Sparkles } from 'lucide-react';
+import teicVisual from '../assets/aistudio/New_Project__15__9a17a30b.png';
+import teicLogo from '../assets/aistudio/New_Project__17__4e8eb2ef.png';
 
 export const Hero: React.FC = () => {
   return (
@@ -49,7 +51,7 @@ export const Hero: React.FC = () => {
           <div className="lg:col-span-5 space-y-4">
             <div className="relative rounded-xl overflow-hidden border border-[#355D46] shadow-sm bg-[#162B1F] p-4 sm:p-6 flex items-center justify-center">
               <img
-                src="/assets/aistudio/New_Project__15__9a17a30b.png"
+                src={teicVisual}
                 alt="TEIC - Technology for Empowering Irish Communities"
                 className="w-full h-auto max-h-72 sm:max-h-80 object-contain rounded-lg"
               />
@@ -62,7 +64,7 @@ export const Hero: React.FC = () => {
                 <div className="text-[11px] text-[#BCB6A4] mt-0.5">Department of Computer Science & Information Systems</div>
               </div>
               <img
-                src="/assets/aistudio/New_Project__17__4e8eb2ef.png"
+                src={teicLogo}
                 alt="TEIC Official Emblem"
                 className="h-8 w-auto object-contain shrink-0"
               />

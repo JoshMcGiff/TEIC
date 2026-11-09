@@ -1,12 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { Meeting } from '../types';
 import {
-  renderMarkdown,
   downloadICalFile,
   getGoogleCalendarLink,
-  generateICal,
   downloadWeeklyRecurringICal,
   getWeeklyGoogleCalendarLink,
+  formatHumanDate,
 } from '../utils/markdownParser';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, MapPin, Clock, Video, Download, ExternalLink } from 'lucide-react';
 
@@ -169,9 +168,11 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
         {/* Section Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
           <div>
-            <p className="text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
-              Féilire & Cruinnithe · Weekly Meetings & Working Groups
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5 text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
+              <span className="text-[#E7E3D3]">Féilire & Cruinnithe</span>
+              <span className="hidden sm:inline text-[#4B8263]" aria-hidden="true">—</span>
+              <span className="text-[#918B7A]">Weekly Meetings & Working Groups</span>
+            </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[#F5F1E4]">
               Interactive Meetings Calendar
             </h2>
@@ -328,8 +329,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
                   <span className="text-xs font-mono uppercase tracking-wider text-[#E7E3D3] font-semibold">
                     {selectedMeeting.isUpcoming ? 'Upcoming Gathering' : 'Past Meeting'}
                   </span>
-                  <span className="text-xs font-mono text-[#BCB6A4]">
-                    {selectedMeeting.date}
+                  <span className="text-xs font-serif font-bold text-[#F5F1E4]">
+                    {formatHumanDate(selectedMeeting.date)}
                   </span>
                 </div>
 
@@ -368,42 +369,22 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
                   {selectedMeeting.topics.join(' · ')}
                 </div>
 
-                {/* Agenda list */}
-                {selectedMeeting.agenda.length > 0 && (
-                  <div className="pt-3 border-t border-[#294B37]">
-                    <div className="text-xs font-semibold text-[#E7E3D3] mb-2">
-                      Session Agenda & Topics
-                    </div>
-                    <ul className="space-y-1.5 text-xs text-[#C8C2AF]">
-                      {selectedMeeting.agenda.map((item, idx) => {
-                        const letter = String.fromCharCode(97 + idx);
-                        const cleanItem = item.replace(/^([0-9]{1,2}:[0-9]{2}\s*-\s*|[a-z]\)\s*)/i, '');
-                        return (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="font-mono font-semibold text-[#E7E3D3]">{letter})</span>
-                            <span>{cleanItem}</span>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Discussion Notes if recorded */}
-                {selectedMeeting.minutesMarkdown && selectedMeeting.minutesMarkdown.trim().length > 10 && (
-                  <div className="pt-3 border-t border-[#294B37]">
-                    <div className="text-xs font-semibold text-[#E7E3D3] mb-2 font-mono uppercase tracking-wider">
-                      Discussion Notes & Outcomes:
-                    </div>
-                    <div
-                      className="prose prose-invert max-w-none text-xs text-[#C8C2AF] space-y-2 leading-relaxed bg-[#162B1F] p-3 rounded-lg border border-[#355D46]"
-                      dangerouslySetInnerHTML={{ __html: renderMarkdown(selectedMeeting.minutesMarkdown) }}
-                    />
-                  </div>
-                )}
+                {/* Context link to full meeting section notes (removes duplicate agenda and notes block) */}
+                <div className="p-3 rounded-lg bg-[#162B1F] border border-[#355D46] text-xs text-[#C8C2AF]">
+                  <p className="leading-relaxed">
+                    The itemised agenda and discussion notes for this session are detailed in the{' '}
+                    <a
+                      href="#meetings"
+                      className="text-[#E7E3D3] font-semibold underline hover:text-[#F5F1E4]"
+                    >
+                      Upcoming Meeting
+                    </a>{' '}
+                    section.
+                  </p>
+                </div>
 
                 {/* Action Buttons */}
-                <div className="pt-4 border-t border-[#294B37] flex flex-wrap items-center gap-2">
+                <div className="pt-3 border-t border-[#294B37] flex flex-wrap items-center gap-2">
                   <button
                     onClick={() => downloadICalFile(selectedMeeting)}
                     className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#E7E3D3] bg-[#162B1F] hover:bg-[#294F3C] border border-[#355D46] rounded-md transition-colors"
@@ -420,13 +401,6 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
                   >
                     <span>Add to Google Calendar</span>
                     <ExternalLink className="w-3 h-3 text-[#162B1F]" />
-                  </a>
-
-                  <a
-                    href="#meetings"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[#BCB6A4] hover:text-[#F5F1E4] transition-colors ml-auto"
-                  >
-                    View All in List →
                   </a>
                 </div>
               </div>

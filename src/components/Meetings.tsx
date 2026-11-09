@@ -4,6 +4,7 @@ import {
   renderMarkdown,
   downloadWeeklyRecurringICal,
   getWeeklyGoogleCalendarLink,
+  formatHumanDate,
 } from '../utils/markdownParser';
 import {
   Calendar,
@@ -34,9 +35,11 @@ export const Meetings: React.FC<MeetingsProps> = ({ meetings }) => {
         {/* Header & Markdown creation trigger */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
           <div>
-            <p className="text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
-              Comhthionóil & Nótaí · Weekly Assembly & Agenda
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5 text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
+              <span className="text-[#E7E3D3]">Comhthionóil & Nótaí</span>
+              <span className="hidden sm:inline text-[#4B8263]" aria-hidden="true">—</span>
+              <span className="text-[#918B7A]">Weekly Assembly & Agenda</span>
+            </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[#F5F1E4]">
               Upcoming Meeting
             </h2>
@@ -119,10 +122,10 @@ export const Meetings: React.FC<MeetingsProps> = ({ meetings }) => {
 
                 {/* Date badge */}
                 <div className="font-mono text-xs sm:text-sm text-[#BCB6A4] sm:text-right shrink-0">
-                  <span className="font-bold text-[#E7E3D3] block sm:inline">
-                    {upcomingMeeting.date}
+                  <span className="font-serif font-bold text-[#F5F1E4] text-sm sm:text-base block">
+                    {formatHumanDate(upcomingMeeting.date)}
                   </span>
-                  <span className="text-xs text-[#918B7A] block">{upcomingMeeting.time}</span>
+                  <span className="text-xs text-[#E7E3D3] block mt-0.5">{upcomingMeeting.time}</span>
                 </div>
               </div>
 

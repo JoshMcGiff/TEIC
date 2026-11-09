@@ -1,5 +1,6 @@
 import React from 'react';
 import { Github, Globe, FileText, Calendar, Mail, ArrowUp } from 'lucide-react';
+import teicLogo from '../assets/aistudio/New_Project__17__4e8eb2ef.png';
 
 export const Footer: React.FC = () => {
   const scrollToTop = () => {
@@ -14,7 +15,7 @@ export const Footer: React.FC = () => {
           <div className="md:col-span-2 space-y-3">
             <div className="flex items-center gap-3">
               <img
-                src="/assets/aistudio/New_Project__17__4e8eb2ef.png"
+                src={teicLogo}
                 alt="TEIC Logo"
                 className="h-8 sm:h-9 w-auto object-contain"
               />

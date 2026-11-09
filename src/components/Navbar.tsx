@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
+import teicLogo from '../assets/aistudio/New_Project__17__4e8eb2ef.png';
 
 interface NavbarProps {
   isDark?: boolean;
@@ -43,7 +44,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
           title="TEIC - Technology for Empowering Irish Communities"
         >
           <img
-            src="/assets/aistudio/New_Project__17__4e8eb2ef.png"
+            src={teicLogo}
             alt="TEIC"
             className="h-8 sm:h-9.5 md:h-10 w-auto object-contain transition-opacity group-hover:opacity-90 shrink-0"
           />

@@ -118,11 +118,23 @@ export function markdownToPublication(markdownRaw: string, fallbackId = ''): Pub
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/(^-|-$)/g, '');
 
-  const authors = Array.isArray(data.authors)
+  const rawAuthors = Array.isArray(data.authors)
     ? data.authors
     : typeof data.authors === 'string'
     ? data.authors.split(',').map((a: string) => a.trim())
     : ['TEIC Research Group'];
+
+  const authors: string[] = [];
+  for (const a of rawAuthors) {
+    if (typeof a === 'string') {
+      const trimmed = a.trim();
+      if (trimmed.includes('Adam Burke') && trimmed.includes("Barry O'Sullivan") && !trimmed.includes(',')) {
+        authors.push('Adam Burke', "Barry O'Sullivan");
+      } else {
+        authors.push(trimmed);
+      }
+    }
+  }
 
   const topics = Array.isArray(data.topics)
     ? data.topics
@@ -332,4 +344,25 @@ export function getWeeklyGoogleCalendarLink(): string {
   const location = encodeURIComponent('CSIS Building, University of Limerick (UL) & Microsoft Teams');
 
   return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&recur=RRULE:FREQ=WEEKLY;BYDAY=TH&details=${details}&location=${location}`;
+}
+
+/**
+ * Format ISO date string (YYYY-MM-DD) into human-readable text (e.g. Thursday, 19 November 2026)
+ */
+export function formatHumanDate(dateStr: string): string {
+  if (!dateStr) return '';
+  try {
+    const parts = dateStr.split('-');
+    if (parts.length !== 3) return dateStr;
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1;
+    const day = parseInt(parts[2], 10);
+    const dateObj = new Date(year, month, day);
+    if (isNaN(dateObj.getTime())) return dateStr;
+    const weekday = dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
+    const dmy = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    return `${weekday}, ${dmy}`;
+  } catch {
+    return dateStr;
+  }
 }

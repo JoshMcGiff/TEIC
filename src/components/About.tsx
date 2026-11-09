@@ -96,14 +96,15 @@ export const About: React.FC = () => {
                     <span className="text-[11px] font-mono uppercase tracking-wider text-[#E7E3D3] block mb-2 font-semibold">
                       Key Research Initiatives:
                     </span>
-                    {pillar.focusAreas.map((area, idx) => {
+                    {pillar.focusAreas.map((rawArea, idx) => {
+                      const area = rawArea.replace(/^\s*[\.·•\s]+/, '').trim();
                       const colonIdx = area.indexOf(':');
                       if (colonIdx !== -1) {
-                        const titlePart = area.slice(0, colonIdx);
+                        const titlePart = area.slice(0, colonIdx).trim();
                         const descPart = area.slice(colonIdx + 1);
                         return (
-                          <div key={idx} className="flex items-start gap-2 text-xs text-[#C8C2AF] leading-normal">
-                            <span className="text-[#E7E3D3] mt-0.5 shrink-0">·</span>
+                          <div key={idx} className="flex items-start gap-2.5 text-xs text-[#C8C2AF] leading-normal">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#E7E3D3]/70 mt-1.5 shrink-0" aria-hidden="true" />
                             <span>
                               <strong className="text-[#F5F1E4] font-semibold">{titlePart}:</strong>
                               {descPart}
@@ -112,8 +113,8 @@ export const About: React.FC = () => {
                         );
                       }
                       return (
-                        <div key={idx} className="flex items-start gap-2 text-xs text-[#C8C2AF]">
-                          <span className="text-[#E7E3D3] mt-0.5 shrink-0">·</span>
+                        <div key={idx} className="flex items-start gap-2.5 text-xs text-[#C8C2AF]">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#E7E3D3]/70 mt-1.5 shrink-0" aria-hidden="true" />
                           <span>{area}</span>
                         </div>
                       );

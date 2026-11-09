@@ -63,9 +63,11 @@ export const Publications: React.FC<PublicationsProps> = ({
         {/* Header & Add Markdown Entry Action */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <div>
-            <p className="text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
-              Taighde & Foilseacháin · Peer-Reviewed & Community Open Access
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5 text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
+              <span className="text-[#E7E3D3]">Taighde & Foilseacháin</span>
+              <span className="hidden sm:inline text-[#4B8263]" aria-hidden="true">—</span>
+              <span className="text-[#918B7A]">Peer-Reviewed & Community Open Access</span>
+            </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[#F5F1E4]">
               Recent Publications & Working Papers
             </h2>
@@ -187,9 +189,9 @@ export const Publications: React.FC<PublicationsProps> = ({
                   </div>
 
                   {/* Authors line */}
-                  <div className="text-xs text-[#C8C2AF] mb-4 font-sans">
+                  <div className="text-xs text-[#C8C2AF] mb-4 font-sans leading-relaxed">
                     <span className="text-[#918B7A]">Authors: </span>
-                    {pub.authors.join(' · ')}
+                    {pub.authors.join(', ')}
                   </div>
 
                   {/* Abstract preview */}
