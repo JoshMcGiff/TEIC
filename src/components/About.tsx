@@ -97,7 +97,7 @@ export const About: React.FC = () => {
                       Key Research Initiatives:
                     </span>
                     {pillar.focusAreas.map((rawArea, idx) => {
-                      const area = rawArea.replace(/^\s*[\.·•\s]+/, '').trim();
+                      const area = String(rawArea || '').replace(/^\s*[\.·•\s]+/, '').trim();
                       const colonIdx = area.indexOf(':');
                       if (colonIdx !== -1) {
                         const titlePart = area.slice(0, colonIdx).trim();

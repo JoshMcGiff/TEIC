@@ -3,8 +3,6 @@ import { Publication, Meeting } from './types';
 import {
   getBasePublications,
   getBaseMeetings,
-  getCustomPublications,
-  getCustomMeetings,
 } from './data/contentStore';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
@@ -42,19 +40,25 @@ export default function App() {
     setIsDark((prev) => !prev);
   }, []);
 
-  // Publications state (loaded from repository markdown files)
-  const [customPubs] = useState<Publication[]>(() => getCustomPublications());
+  // Publications state (loaded cleanly from repository markdown files)
   const publications = useMemo(() => {
-    const base = getBasePublications();
-    return [...customPubs, ...base];
-  }, [customPubs]);
+    try {
+      return getBasePublications();
+    } catch (err) {
+      console.error('Failed to load publications:', err);
+      return [];
+    }
+  }, []);
 
-  // Meetings state (loaded from repository markdown files)
-  const [customMeetings] = useState<Meeting[]>(() => getCustomMeetings());
+  // Meetings state (loaded cleanly from repository markdown files)
   const meetings = useMemo(() => {
-    const base = getBaseMeetings();
-    return [...customMeetings, ...base];
-  }, [customMeetings]);
+    try {
+      return getBaseMeetings();
+    } catch (err) {
+      console.error('Failed to load meetings:', err);
+      return [];
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-[#1C3728] text-[#E7E3D3] flex flex-col font-sans selection:bg-[#E7E3D3] selection:text-[#162B1F]">

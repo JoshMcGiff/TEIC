@@ -191,7 +191,7 @@ export const Publications: React.FC<PublicationsProps> = ({
                   {/* Authors line */}
                   <div className="text-xs text-[#C8C2AF] mb-4 font-sans leading-relaxed">
                     <span className="text-[#918B7A]">Authors: </span>
-                    {pub.authors.join(', ')}
+                    {(pub.authors || []).join(', ')}
                   </div>
 
                   {/* Abstract preview */}
@@ -202,7 +202,7 @@ export const Publications: React.FC<PublicationsProps> = ({
                   {/* Topics tag-line */}
                   <div className="flex flex-wrap items-center gap-2 text-xs text-[#BCB6A4] mb-5 pt-3 border-t border-[#294B37]">
                     <span className="font-semibold text-[#E7E3D3]">Topics:</span>
-                    {pub.topics.map((t, idx) => (
+                    {(pub.topics || []).map((t, idx) => (
                       <React.Fragment key={t}>
                         <button
                           onClick={() => setSelectedTopic(t)}
@@ -210,7 +210,7 @@ export const Publications: React.FC<PublicationsProps> = ({
                         >
                           {t}
                         </button>
-                        {idx < pub.topics.length - 1 && <span aria-hidden="true">/</span>}
+                        {idx < (pub.topics || []).length - 1 && <span aria-hidden="true">/</span>}
                       </React.Fragment>
                     ))}
                   </div>

@@ -366,7 +366,7 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
                 {/* Topics (clean text metadata with separators, no pills) */}
                 <div className="pt-2 text-xs text-[#BCB6A4]">
                   <span className="font-semibold text-[#E7E3D3]">Key Themes: </span>
-                  {selectedMeeting.topics.join(' · ')}
+                  {(selectedMeeting.topics || []).join(' · ')}
                 </div>
 
                 {/* Context link to full meeting section notes (removes duplicate agenda and notes block) */}

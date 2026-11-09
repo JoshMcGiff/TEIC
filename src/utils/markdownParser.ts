@@ -349,20 +349,26 @@ export function getWeeklyGoogleCalendarLink(): string {
 /**
  * Format ISO date string (YYYY-MM-DD) into human-readable text (e.g. Thursday, 19 November 2026)
  */
-export function formatHumanDate(dateStr: string): string {
-  if (!dateStr) return '';
+export function formatHumanDate(dateInput: any): string {
+  if (!dateInput) return '';
   try {
+    const dateStr = String(dateInput).trim();
     const parts = dateStr.split('-');
-    if (parts.length !== 3) return dateStr;
-    const year = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10) - 1;
-    const day = parseInt(parts[2], 10);
-    const dateObj = new Date(year, month, day);
-    if (isNaN(dateObj.getTime())) return dateStr;
-    const weekday = dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
-    const dmy = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-    return `${weekday}, ${dmy}`;
-  } catch {
+    if (parts.length === 3) {
+      const year = parseInt(parts[0], 10);
+      const month = parseInt(parts[1], 10) - 1;
+      const day = parseInt(parts[2], 10);
+      if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+        const dateObj = new Date(year, month, day);
+        if (!isNaN(dateObj.getTime())) {
+          const weekday = dateObj.toLocaleDateString('en-GB', { weekday: 'long' });
+          const dmy = dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+          return `${weekday}, ${dmy}`;
+        }
+      }
+    }
     return dateStr;
+  } catch {
+    return String(dateInput || '');
   }
 }
