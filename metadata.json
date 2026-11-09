@@ -1,0 +1,6 @@
+{
+  "name": "TEIC - Technology for Empowering Irish Communities",
+  "description": "Official research initiative for TEIC (Technology for Empowering Irish Communities). Founded by Josh McGiff at UL, focusing on digital immersion for Irish & low-resource language speakers, unifying the Irish tech ecosystem, and creating shared resources and collective effort.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
