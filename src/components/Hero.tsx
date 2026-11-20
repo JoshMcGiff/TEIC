@@ -83,8 +83,8 @@ export const Hero: React.FC = () => {
             <div className="mt-0.5 font-medium text-[#F5F1E4]">Josh McGiff & Dr. Nikola S. Nikolov</div>
           </div>
           <div>
-            <div className="font-semibold text-[#E7E3D3] uppercase tracking-wider text-[11px]">Weekly meeting</div>
-            <div className="mt-0.5 font-semibold text-[#F5F1E4]">Every Thursday @ 11:00 AM · CSIS (UL) & Teams</div>
+            <div className="font-semibold text-[#E7E3D3] uppercase tracking-wider text-[11px]">Monthly meeting</div>
+            <div className="mt-0.5 font-semibold text-[#F5F1E4]">Next: Thu 17 Dec @ 11:00 AM · CSIS (UL) & Teams</div>
           </div>
         </div>
       </div>

@@ -3,8 +3,7 @@ import { Meeting } from '../types';
 import {
   downloadICalFile,
   getGoogleCalendarLink,
-  downloadWeeklyRecurringICal,
-  getWeeklyGoogleCalendarLink,
+  downloadMonthlyRecurringICal,
   formatHumanDate,
 } from '../utils/markdownParser';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight, MapPin, Clock, Video, Download, ExternalLink } from 'lucide-react';
@@ -74,32 +73,36 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
       }
     });
 
-    // 2. Ensure every Thursday in this month is populated with the weekly 11am CSIS / Teams meeting
-    for (let d = 1; d <= daysInMonth; d++) {
-      const dayOfWeek = new Date(year, month, d).getDay(); // 4 = Thursday
-      if (dayOfWeek === 4) {
-        if (!map[d] || map[d].length === 0) {
-          const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-          const isUpcoming = new Date(year, month, d, 12, 30).getTime() >= new Date().getTime();
-          map[d] = [
-            {
-              id: `weekly-thursday-${dateStr}`,
-              slug: `weekly-meeting-${dateStr}`,
-              title: 'Weekly Research Meeting: Irish NLP & Community Technology',
-              date: dateStr,
-              time: '11:00 - 12:30 IST (Every Thursday)',
-              location: 'CSIS Building, University of Limerick (UL) & Microsoft Teams',
-              isUpcoming,
-              topics: ['Digital Immersion for Irish', 'Irish Tech Ecosystem', 'Shared Resources & Effort', 'Low-Resource NLP'],
-              agenda: [
-                'Introduction + welcome',
-                'Objectives of the group',
-                'Overview of what we are working on',
-              ],
-              hybridLink: 'https://teams.microsoft.com/l/meetup-join/19%3ameeting_teic_weekly%40thread.v2/0',
-              contactPerson: 'josh.mcgiff@ul.ie',
-            },
-          ];
+    // 2. For future months from Jan 2027 onwards, populate the monthly 3rd Thursday gathering if no explicit markdown file exists
+    const isFutureProjectionMonth = year > 2026;
+    if (isFutureProjectionMonth) {
+      let thursdayCount = 0;
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dayOfWeek = new Date(year, month, d).getDay(); // 4 = Thursday
+        if (dayOfWeek === 4) {
+          thursdayCount += 1;
+          if (thursdayCount === 3 && (!map[d] || map[d].length === 0)) {
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const isUpcoming = new Date(year, month, d, 12, 30).getTime() >= new Date().getTime();
+            map[d] = [
+              {
+                id: `monthly-thursday-${dateStr}`,
+                slug: `monthly-meeting-${dateStr}`,
+                title: 'Monthly Meeting: Technology for Empowering Irish Communities',
+                date: dateStr,
+                time: '11:00 AM IST (Thursday)',
+                location: 'CSIS Building, University of Limerick (UL) & Online on Microsoft Teams',
+                isUpcoming,
+                topics: ['Digital Immersion for Irish', 'Irish Tech Ecosystem', 'Shared Resources & Effort', 'Low-Resource NLP'],
+                agenda: [
+                  'Welcome & project check-in',
+                  'Cross-institutional collaboration updates',
+                  'Open technical discussion & next steps',
+                ],
+                contactPerson: 'josh.mcgiff@ul.ie',
+              },
+            ];
+          }
         }
       }
     }
@@ -171,23 +174,23 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
             <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2.5 text-xs uppercase tracking-widest font-sans font-semibold text-[#BCB6A4] mb-2">
               <span className="text-[#E7E3D3]">Cruinnithe</span>
               <span className="hidden sm:inline text-[#4B8263]" aria-hidden="true">—</span>
-              <span className="text-[#918B7A]">Weekly Meetings & Working Groups</span>
+              <span className="text-[#918B7A]">Monthly Meetings & Working Groups</span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl font-medium tracking-tight text-[#F5F1E4]">
               Interactive Meetings Calendar
             </h2>
             <p className="mt-2 text-sm text-[#C8C2AF] max-w-2xl">
-              TEIC gathers <strong className="text-[#F5F1E4] font-semibold">every Thursday at 11:00 AM IST</strong> in the CSIS Building at the University of Limerick (UL) and online via Microsoft Teams. Click any highlighted date to inspect agenda topics, hybrid coordinates, or download calendar invites.
+              TEIC gathers <strong className="text-[#F5F1E4] font-semibold">monthly at 11:00 AM IST</strong> in the CSIS Building at the University of Limerick (UL) and online via Microsoft Teams. Our next meeting is on <strong className="text-[#F5F1E4] font-semibold">Thursday, 17 December 2026</strong>. Click any highlighted date to inspect details or download calendar invites.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2 self-start sm:self-auto">
             <button
-              onClick={downloadWeeklyRecurringICal}
+              onClick={downloadMonthlyRecurringICal}
               className="inline-flex items-center gap-2 px-3.5 py-2 text-xs font-semibold text-[#162B1F] bg-[#E7E3D3] hover:bg-[#F5F1E4] rounded-lg transition-colors whitespace-nowrap shadow-sm"
             >
               <Download className="w-3.5 h-3.5 text-[#162B1F]" />
-              <span>Weekly Series (.ics)</span>
+              <span>Monthly Series (.ics)</span>
             </button>
 
             <button
@@ -235,27 +238,12 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
 
             {/* Day of Week Headers */}
             <div className="grid grid-cols-7 gap-1 text-center mb-2">
-              {[
-                { label: 'Mon', isWeekly: false },
-                { label: 'Tue', isWeekly: false },
-                { label: 'Wed', isWeekly: false },
-                { label: 'Thu', isWeekly: true },
-                { label: 'Fri', isWeekly: false },
-                { label: 'Sat', isWeekly: false },
-                { label: 'Sun', isWeekly: false },
-              ].map((day) => (
+              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((label) => (
                 <div
-                  key={day.label}
-                  className={`text-xs py-1 rounded transition-colors ${
-                    day.isWeekly
-                      ? 'text-[#F5F1E4] font-bold bg-[#162B1F] border border-[#4B8263]/60'
-                      : 'text-[#BCB6A4] font-semibold'
-                  }`}
+                  key={label}
+                  className="text-xs py-1 rounded text-[#BCB6A4] font-semibold"
                 >
-                  <div>{day.label}</div>
-                  {day.isWeekly && (
-                    <div className="text-[9px] text-[#E7E3D3] font-normal tracking-tight">11:00 AM</div>
-                  )}
+                  {label}
                 </div>
               ))}
             </div>
@@ -369,15 +357,15 @@ export const CalendarView: React.FC<CalendarViewProps> = ({ meetings, onSelectMe
                   {(selectedMeeting.topics || []).join(' · ')}
                 </div>
 
-                {/* Context link to full meeting section notes (removes duplicate agenda and notes block) */}
+                {/* Context link to full meeting section notes */}
                 <div className="p-3 rounded-lg bg-[#162B1F] border border-[#355D46] text-xs text-[#C8C2AF]">
                   <p className="leading-relaxed">
-                    The itemised agenda and discussion notes for this session are detailed in the{' '}
+                    Full agendas and discussion summaries are detailed in the{' '}
                     <a
                       href="#meetings"
                       className="text-[#E7E3D3] font-semibold underline hover:text-[#F5F1E4]"
                     >
-                      Upcoming Meeting
+                      Meetings & Discussion Summaries
                     </a>{' '}
                     section.
                   </p>

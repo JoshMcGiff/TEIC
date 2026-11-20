@@ -257,23 +257,23 @@ export function generateICal(meeting: Meeting): string {
 }
 
 /**
- * Generate a recurring weekly Thursday series iCalendar file (.ics)
+ * Generate a recurring monthly series iCalendar file (.ics) starting 17 December 2026
  */
-export function generateWeeklyRecurringICal(): string {
+export function generateMonthlyRecurringICal(): string {
   const icsContent = [
     'BEGIN:VCALENDAR',
     'VERSION:2.0',
-    'PRODID:-//TEIC Research Group//Weekly Meeting//EN',
+    'PRODID:-//TEIC Research Group//Monthly Meeting//EN',
     'CALSCALE:GREGORIAN',
     'METHOD:PUBLISH',
     'BEGIN:VEVENT',
-    'UID:teic-weekly-thursday-series@teic-research.org',
-    'DTSTAMP:20261105T110000Z',
-    'DTSTART;TZID=Europe/Dublin:20261105T110000',
-    'DTEND;TZID=Europe/Dublin:20261105T123000',
-    'RRULE:FREQ=WEEKLY;BYDAY=TH',
-    'SUMMARY:TEIC Weekly Meeting (Every Thursday 11:00 AM)',
-    'DESCRIPTION:Weekly research meeting of TEIC (Technology for Empowering Irish Communities). Discussing NLP for Irish, open civic technology, and cross-institutional collaboration. Open to all students, researchers, and community collaborators.',
+    'UID:teic-monthly-series@teic-research.org',
+    'DTSTAMP:20261217T110000Z',
+    'DTSTART;TZID=Europe/Dublin:20261217T110000',
+    'DTEND;TZID=Europe/Dublin:20261217T123000',
+    'RRULE:FREQ=MONTHLY;BYDAY=3TH',
+    'SUMMARY:TEIC Monthly Meeting (11:00 AM IST)',
+    'DESCRIPTION:Monthly research meeting of TEIC (Technology for Empowering Irish Communities). Discussing NLP for Irish, open civic technology, and cross-institutional collaboration. Open to all students, researchers, and community collaborators.',
     'LOCATION:CSIS Building, University of Limerick (UL) & Microsoft Teams',
     'STATUS:CONFIRMED',
     'END:VEVENT',
@@ -300,15 +300,15 @@ export function downloadICalFile(meeting: Meeting) {
 }
 
 /**
- * Trigger download of weekly recurring series .ics
+ * Trigger download of monthly recurring series .ics
  */
-export function downloadWeeklyRecurringICal() {
-  const ics = generateWeeklyRecurringICal();
+export function downloadMonthlyRecurringICal() {
+  const ics = generateMonthlyRecurringICal();
   const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `teic-weekly-thursday-meetings.ics`;
+  a.download = `teic-monthly-meetings.ics`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -324,7 +324,7 @@ export function getGoogleCalendarLink(meeting: Meeting): string {
   const end = `${dateClean}T123000Z`;
   const title = encodeURIComponent(`TEIC: ${meeting.title}`);
   const details = encodeURIComponent(
-    `Topics: ${meeting.topics.join(', ')}\n\nAgenda:\n${meeting.agenda.map((a) => `• ${a}`).join('\n')}\n\nLocation: ${meeting.location}\n\nSchedule: Every Thursday at 11:00 AM in CSIS at UL or online on Microsoft Teams.`
+    `Topics: ${meeting.topics.join(', ')}\n\nAgenda:\n${meeting.agenda.map((a) => `• ${a}`).join('\n')}\n\nLocation: ${meeting.location}\n\nSchedule: Monthly at 11:00 AM IST in CSIS at UL or online on Microsoft Teams.`
   );
   const location = encodeURIComponent(meeting.location);
 
@@ -332,19 +332,24 @@ export function getGoogleCalendarLink(meeting: Meeting): string {
 }
 
 /**
- * Create a recurring Google Calendar link for every Thursday at 11am
+ * Create a recurring Google Calendar link for monthly meetings starting 17 December 2026
  */
-export function getWeeklyGoogleCalendarLink(): string {
-  const start = '20261105T110000Z';
-  const end = '20261105T123000Z';
-  const title = encodeURIComponent('TEIC Weekly Meeting (Every Thursday 11:00 AM)');
+export function getMonthlyGoogleCalendarLink(): string {
+  const start = '20261217T110000Z';
+  const end = '20261217T123000Z';
+  const title = encodeURIComponent('TEIC Monthly Meeting (11:00 AM IST)');
   const details = encodeURIComponent(
-    'Weekly research gathering of TEIC - Technology for Empowering Irish Communities.\n\nTime: Every Thursday at 11:00 AM IST\nVenue: CSIS Building, University of Limerick (UL) or online on Microsoft Teams.\n\nFounder: Josh McGiff (UL NLP)\nAdvisement: Dr. Nikola S. Nikolov (UL CSIS)'
+    'Monthly research gathering of TEIC - Technology for Empowering Irish Communities.\n\nTime: Monthly on the 3rd Thursday at 11:00 AM IST (Next: 17 December 2026)\nVenue: CSIS Building, University of Limerick (UL) or online on Microsoft Teams.\n\nFounder: Josh McGiff (UL NLP)\nAdvisement: Dr. Nikola S. Nikolov (UL CSIS)'
   );
   const location = encodeURIComponent('CSIS Building, University of Limerick (UL) & Microsoft Teams');
 
-  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&recur=RRULE:FREQ=WEEKLY;BYDAY=TH&details=${details}&location=${location}`;
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&recur=RRULE:FREQ=MONTHLY;BYDAY=3TH&details=${details}&location=${location}`;
 }
+
+// Backward-compatible aliases
+export const generateWeeklyRecurringICal = generateMonthlyRecurringICal;
+export const downloadWeeklyRecurringICal = downloadMonthlyRecurringICal;
+export const getWeeklyGoogleCalendarLink = getMonthlyGoogleCalendarLink;
 
 /**
  * Format ISO date string (YYYY-MM-DD) into human-readable text (e.g. Thursday, 19 November 2026)

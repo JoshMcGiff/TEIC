@@ -88,7 +88,7 @@ ${formData.message}`;
               </div>
               <div className="flex items-center gap-2">
                 <MessageSquare className="w-4 h-4 text-[#E7E3D3] shrink-0" />
-                <span>Weekly Meetings: Every Thursday at 11:00 AM (CSIS & Teams)</span>
+                <span>Monthly Meetings: 11:00 AM IST (Next: 17 Dec · CSIS & Teams)</span>
               </div>
               <div className="pt-2 text-[11px] text-[#918B7A]">
                 All sessions are open and free of charge.

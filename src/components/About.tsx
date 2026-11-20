@@ -32,7 +32,7 @@ export const About: React.FC = () => {
       focusAreas: [
         'Inter-Institutional Working Groups: Harnessing the international technical talent interested in researching Irish language technology.',
         'Civic & Academic Alliances: Partnering with grassroots developers, digital Gaeilgeoirí, and open-source advocates to foster inclusive online destinations.',
-        'Cross-Lab Talent Exchange: Facilitating collaborative research, weekly assemblies, and interdisciplinary skill sharing.',
+        'Cross-Lab Talent Exchange: Facilitating collaborative research, monthly assemblies, and interdisciplinary skill sharing.',
         'Research Anchor (UL & CSIS): Grounded at the Department of Computer Science and Information Systems (CSIS), University of Limerick, driving nationwide collaboration.',
       ],
     },

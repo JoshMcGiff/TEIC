@@ -144,10 +144,10 @@ Open hardware and cooperative governance offer viable models when commercial pro
 `;
 
 export const SAMPLE_MEETING_TEMPLATE = `---
-title: "Weekly Research Meeting: Irish NLP & Civic Technology"
-date: "2026-11-26"
-time: "11:00 - 12:30 IST (Every Thursday)"
-location: "CSIS Building, University of Limerick (UL) & Microsoft Teams"
+title: "Monthly Meeting: Technology for Empowering Irish Communities"
+date: "2026-12-17"
+time: "11:00 AM IST (Thursday)"
+location: "CSIS Building, University of Limerick (UL) & Online on Microsoft Teams"
 isUpcoming: true
 contactPerson: "Josh McGiff (josh.mcgiff@ul.ie)"
 hybridLink: "https://teams.microsoft.com/l/meetup-join/19%3ameeting_teic_weekly%40thread.v2/0"
@@ -162,8 +162,8 @@ agenda:
   - "Overview of what we are working on"
 ---
 
-# Weekly Research Meeting: Irish NLP & Civic Technology
+# Monthly Meeting: Technology for Empowering Irish Communities
 
 ## Meeting Overview
-Join the TEIC research team every Thursday at 11:00 AM in the CSIS Building at the University of Limerick (UL) or online via Microsoft Teams. We welcome students, researchers, community partners, and technologists working to empower Irish communities through collaborative technology.
+Join the TEIC research team monthly at 11:00 AM in the CSIS Building at the University of Limerick (UL) or online via Microsoft Teams. We welcome students, researchers, community partners, and technologists working to empower Irish communities through collaborative technology.
 `;
